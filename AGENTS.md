@@ -55,9 +55,9 @@ Node.
 - **ponytail (full)** — laziest thing that works. Mark shortcuts `// ponytail: <ceiling>, <upgrade path>`.
 - **caveman (ultra)** — chat prose only. Code, comments, commits, and docs stay normal clear English.
 - No design-system skill. The visual reference is https://softserve.nog.cc/: cream paper, deep green
-  ink, soft matte toy-like 3D (not photoreal), a hold pad at the bottom, a result card with chunky
-  pressable buttons. Colours are tokens at the top of `css/style.css`; reuse them rather than adding new
-  ones. Use `/impeccable` if the UI grows beyond the pad and the result card.
+  ink, soft matte toy-like 3D (not photoreal), a result card with chunky pressable buttons. Unlike the
+  reference, nothing covers the balloon while blowing: no pad panel, no live counter. Colours are tokens at the top of `css/style.css`; reuse them rather than adding new
+  ones. Use `/impeccable` if the UI grows beyond the hint and the result card.
 - One responsibility per file. 300-line soft ceiling, 500 hard (tests and assets excluded) — past it,
   split along a seam, not at a line count. Watch `main.js` and the scene setup: they are the obvious
   home for every new thing.
