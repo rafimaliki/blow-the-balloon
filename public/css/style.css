@@ -1,0 +1,112 @@
+:root {
+  --ink: #fbf4ee;
+  --ink-soft: rgb(251 244 238 / 0.72);
+  --scrim: rgb(20 14 12 / 0.55);
+  --accent: #ffcf4a;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--ink);
+}
+
+/* A game surface: no scroll, zoom, selection, callouts or tap highlight. */
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: #1a1412;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+}
+
+#stage {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+.hint {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(10vh + env(safe-area-inset-bottom));
+  margin: 0;
+  text-align: center;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  text-shadow: 0 1px 8px rgb(0 0 0 / 0.5);
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  animation: breathe 2.4s ease-in-out infinite;
+}
+.hint.gone { opacity: 0; animation: none; }
+
+@keyframes breathe {
+  50% { opacity: 0.45; }
+}
+
+.result {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.25rem;
+  padding: 1rem;
+  background: var(--scrim);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  text-align: center;
+  animation: fade-in 0.35s ease both;
+}
+.result[hidden] { display: none; }
+
+.result p { margin: 0; }
+
+.result-title {
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.result-score {
+  font-size: clamp(4rem, 22vw, 8rem);
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.result-score small { font-size: 0.35em; font-weight: 500; margin-left: 0.15em; }
+
+.result-best { color: var(--ink-soft); min-height: 1.5em; }
+.result-best.new { color: var(--accent); font-weight: 600; }
+
+#again {
+  margin-top: 1.5rem;
+  padding: 0.9rem 2.2rem;
+  font: inherit;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1412;
+  background: var(--ink);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+#again:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hint { animation: none; }
+  .result { animation: none; }
+}

@@ -7,7 +7,7 @@ Static site, no build step, Three.js from a pinned CDN import map. Must play on 
 
 ```
 python -m http.server 8000 -d public     # then open http://localhost:8000
-node test/run.js                         # pure-logic self-checks
+node --test                              # pure-logic checks (Node's built-in runner)
 ```
 
 ## Hard constraints
@@ -37,10 +37,11 @@ public/                 deployed as-is; nothing outside it ships
     balloon/            balloon mesh, material, inflation deformation, pop effect
     game/               round state machine, burst rule, scoring (pure, no DOM, no Three.js)
     input/              hold-to-blow from pointer + keyboard
+    audio/              synthesised breath and pop (Web Audio, no sound files)
     ui/                 result overlay, high score display
     storage/            localStorage read/write for scores
   assets/               models, textures, sounds (compressed; keep each file small)
-test/                   mirrors public/js; run.js runs every *.test.js
+test/                   mirrors public/js; `node --test` finds every *.test.js
 docs/                   design notes (see Docs)
 ```
 
@@ -89,7 +90,7 @@ conventions here win over their defaults.
 ## Definition of done
 
 - The change landed on a branch and merged by pull request; the default branch was never written to directly.
-- `node test/run.js` passes.
+- `node --test` passes.
 - Served by `python -m http.server 8000 -d public`, the game loads with a clean console and a full round
   works: hold → balloon grows → release → score shown; and hold too long → pop → score 0.
 - Checked in a phone-sized viewport with touch emulation: hold-to-blow works, the page does not scroll,
