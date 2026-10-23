@@ -1,7 +1,8 @@
 // High score in localStorage. Storage can be missing or throw (private mode, blocked
 // site data); the game must keep working, it just forgets the best score.
 
-const KEY = 'blow-the-balloon.best';
+// Versioned by unit: bests saved when the score was in cm must not compete with litres.
+const KEY = 'blow-the-balloon.best-litres';
 
 export function loadBest(storage) {
   try {

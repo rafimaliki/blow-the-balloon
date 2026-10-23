@@ -1,7 +1,8 @@
 // One round of blowing: ready -> blowing -> released | popped.
 // Pure: no DOM, no Three.js, so it runs under `node --test`.
 
-// Tuned by feel. Volume is what the player adds; diameter is what they see and score.
+// Tuned by feel. Volume is what the player adds and is scored on; the burst point is
+// set by diameter, because that is how far the rubber stretches.
 export const TUNING = {
   startVolumeL: 0,        // empty: every bit of size is the player's breath
   airflowLps: 5.5,        // litres per second while holding
@@ -49,5 +50,6 @@ export function isOver(round) {
 }
 
 export function score(round) {
-  return round.state === 'popped' ? 0 : Math.round(diameterCm(round.volumeL));
+  // Litres, to one decimal.
+  return round.state === 'popped' ? 0 : Math.round(round.volumeL * 10) / 10;
 }

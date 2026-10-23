@@ -26,7 +26,7 @@ export function createStage(canvas) {
   scene.add(key);
 
   const camera = new THREE.PerspectiveCamera(60, 1, 0.01, 50);
-  camera.rotation.x = -0.2; // looking slightly down, along the balloon
+  camera.rotation.x = -0.4; // looking down at the balloon so all of it, neck included, is in frame
   const rest = camera.position.clone();
 
   const resize = () => {

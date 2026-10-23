@@ -16,6 +16,8 @@ const broken = { getItem() { throw new Error('blocked'); }, setItem() { throw ne
   assert.equal(recordScore(s, 30), false);
   assert.equal(loadBest(s), 30);
   assert.equal(recordScore(s, 0), false);
+  assert.equal(recordScore(s, 30.4), true);
+  assert.equal(loadBest(s), 30.4);
 }
 
 // Missing or throwing storage never breaks the game.

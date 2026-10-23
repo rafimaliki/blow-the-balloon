@@ -5,12 +5,10 @@
   --card: rgb(255 250 241 / 0.94);
   --ink: #3c504a;
   --ink-soft: #6f7f78;
-  --pad: #e8eddc;
   --pad-line: #a9b8a6;
   --primary: #3d6558;
   --primary-edge: #294c40;
   --badge: #f3c766;
-  --pad-h: min(30vh, 240px);
   font-family: "Hiragino Maru Gothic ProN", "Noto Sans JP", system-ui, -apple-system, "Segoe UI", sans-serif;
   color: var(--ink);
 }
@@ -34,13 +32,12 @@ html, body {
   inset: 0;
 }
 
-/* The 3D view sits above the pad so the balloon is never hidden behind it. */
+/* The 3D view fills the screen: nothing sits in front of the balloon while blowing. */
 #stage {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
-  height: calc(100% - var(--pad-h) - env(safe-area-inset-bottom));
+  height: 100%;
   display: block;
 }
 
@@ -58,50 +55,41 @@ html, body {
 .brand { font-weight: 800; letter-spacing: 0.02em; }
 .best { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 
-/* Hold pad: a visual cue for where to press. The whole #play area takes the press. */
+/* Hold hint: a small floating cue, no panel. The whole #play area takes the press, and
+   the hint gets out of the way while blowing so the whole balloon is in view. */
 .pad {
   position: absolute;
-  left: 50%;
-  bottom: 0;
-  translate: -50% 0;
-  width: min(100%, 560px);
-  height: calc(var(--pad-h) + env(safe-area-inset-bottom));
-  box-sizing: border-box;
-  padding-bottom: env(safe-area-inset-bottom);
+  left: 0;
+  right: 0;
+  top: 30%;
   display: grid;
-  place-content: center;
   justify-items: center;
-  gap: 14px;
-  background: var(--pad);
-  border-radius: 32px 32px 0 0;
+  gap: 8px;
   pointer-events: none;
-  transition: opacity 0.25s ease, translate 0.35s ease;
+  transition: opacity 0.3s ease, translate 0.35s ease;
 }
-.pad.away { opacity: 0; translate: -50% 40%; }
+.pad.holding, .pad.away { opacity: 0; translate: 0 12px; }
 
 .ring {
-  width: 108px;
-  height: 108px;
+  width: 52px;
+  height: 52px;
   display: grid;
   place-items: center;
   border: 2px dotted var(--pad-line);
   border-radius: 50%;
-  transition: scale 0.2s ease;
+  animation: breathe 2.4s ease-in-out infinite;
 }
 .dot {
-  width: 20px;
-  height: 20px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: #7f988c;
-  box-shadow: 0 0 0 5px rgb(127 152 140 / 0.25);
-  transition: scale 0.2s ease;
+  box-shadow: 0 0 0 4px rgb(127 152 140 / 0.25);
 }
-.pad.holding .ring { scale: 0.9; animation: spin 6s linear infinite; }
-.pad.holding .dot { scale: 0.6; }
+
+@keyframes breathe { 50% { scale: 0.88; } }
 
 .pad-label { margin: 0; font-size: 0.85rem; font-weight: 700; color: var(--ink-soft); }
-
-@keyframes spin { to { rotate: 1turn; } }
 
 .result {
   position: fixed;
@@ -172,5 +160,5 @@ html, body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .result, .pad.holding .ring { animation: none; }
+  .result, .ring { animation: none; }
 }

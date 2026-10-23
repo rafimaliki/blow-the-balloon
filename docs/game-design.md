@@ -34,7 +34,11 @@ If the balloon reaches its burst point while held, it pops, the round ends at on
 
 Numbers live in `TUNING` in `public/js/game/round.js`.
 
-- **Score is the diameter in centimetres**, rounded — a size anyone can picture.
+- **Score is the volume of air in litres**, to one decimal — the breath you put in. Volume climbs
+  steeply while diameter slows down, so a bigger risk pays off visibly: about 9 L at the smallest burst
+  point, about 51 L at the largest. The burst point itself is still set by diameter (how far the rubber
+  stretches). The best score is stored under a litres-specific key, so bests from the old cm scoring
+  do not carry over.
 - **Air goes in at a steady rate, in gentle puffs; size follows volume.** Diameter grows with the cube
   root of volume, so the balloon visibly slows as it gets big, without any special rule.
 - **Burst diameter is uniform between 26 and 46 cm.** A middling burst takes about five seconds of

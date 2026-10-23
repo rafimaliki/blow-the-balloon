@@ -27,8 +27,9 @@ assert.equal(createRound(fixed(0.999999)).burstCm.toFixed(3), TUNING.burstMaxCm.
   assert.ok(r.volumeL > TUNING.startVolumeL);
   step(r, 1 / 60, false);
   assert.equal(r.state, 'released');
-  assert.equal(score(r), Math.round(diameterCm(r.volumeL)));
+  assert.equal(score(r), Math.round(r.volumeL * 10) / 10);
   assert.ok(score(r) > 0);
+  assert.equal(score(r), Number(score(r).toFixed(1)), 'score has at most one decimal');
 }
 
 // One breath per round: holding again after release does not resume.
