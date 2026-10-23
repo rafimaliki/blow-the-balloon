@@ -8,7 +8,9 @@ export const TUNING = {
   airflowLps: 5.5,        // litres per second while holding
   puffHz: 2.2,            // airflow wobbles at this rate so a breath feels organic
   puffDepth: 0.35,        // 0 = steady stream, 1 = full stop between puffs
-  burstMinCm: 26,         // hidden burst diameter is drawn uniformly from this range
+  // Same balloon every round, with the small natural variation of real latex: the cap is
+  // learnable, but stopping at exactly the same spot every time is not safe.
+  burstMinCm: 40,         // hidden burst diameter is drawn uniformly from this range
   burstMaxCm: 46,
 };
 

@@ -1,15 +1,15 @@
-/* Balloons against an open sky: soft blue air, deep plum ink, a violet button that
-   presses down, sunny yellow for a new best. The coral balloon is the only warm red. */
+/* Balloons against an open sky: soft blue air, deep navy ink, a navy button that presses
+   down, sunny yellow for a new best. The coral balloon is the only warm red. */
 :root {
   --sky-high: #9fcdf0;
   --sky: #cfe7f8;
   --sky-glow: #f6fbff;
   --card: rgb(255 255 255 / 0.92);
-  --ink: #2a2154;
-  --ink-soft: #6a6290;
+  --ink: #1d2b45;
+  --ink-soft: #566479;
   --hint-line: #7fa7cc;
-  --primary: #6b4ce6;
-  --primary-edge: #4630b0;
+  --primary: #24477a;
+  --primary-edge: #152c50;
   --badge: #ffd23f;
   --display: "Bagel Fat One", "Fredoka Variable", system-ui, sans-serif;
   font-family: "Fredoka Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -87,7 +87,7 @@ html, body {
   height: 12px;
   border-radius: 50%;
   background: var(--primary);
-  box-shadow: 0 0 0 4px rgb(107 76 230 / 0.2);
+  box-shadow: 0 0 0 4px rgb(36 71 122 / 0.2);
 }
 
 @keyframes breathe { 50% { scale: 0.88; } }
@@ -108,7 +108,7 @@ html, body {
   text-align: center;
   background: var(--card);
   border-radius: 24px;
-  box-shadow: 0 14px 36px rgb(42 33 84 / 0.16);
+  box-shadow: 0 14px 36px rgb(29 43 69 / 0.16);
   animation: rise 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
 }
 .result[hidden] { display: none; }
@@ -126,7 +126,7 @@ html, body {
   font-size: 4rem;
   font-weight: 400;
   line-height: 1.05;
-  color: var(--primary);
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
 .result-unit { font-size: 1.15rem; font-weight: 700; margin-left: 0.2em; }
