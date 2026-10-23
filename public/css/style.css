@@ -1,15 +1,18 @@
-/* Soft, toy-like look: cream paper, deep green ink, chunky pressable buttons. */
+/* Balloons against an open sky: soft blue air, deep plum ink, a violet button that
+   presses down, sunny yellow for a new best. The coral balloon is the only warm red. */
 :root {
-  --paper: #fff8ec;
-  --paper-warm: #f7ead5;
-  --card: rgb(255 250 241 / 0.94);
-  --ink: #3c504a;
-  --ink-soft: #6f7f78;
-  --pad-line: #a9b8a6;
-  --primary: #3d6558;
-  --primary-edge: #294c40;
-  --badge: #f3c766;
-  font-family: "Hiragino Maru Gothic ProN", "Noto Sans JP", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sky-high: #9fcdf0;
+  --sky: #cfe7f8;
+  --sky-glow: #f6fbff;
+  --card: rgb(255 255 255 / 0.92);
+  --ink: #2a2154;
+  --ink-soft: #6a6290;
+  --hint-line: #7fa7cc;
+  --primary: #6b4ce6;
+  --primary-edge: #4630b0;
+  --badge: #ffd23f;
+  --display: "Bagel Fat One", "Fredoka Variable", system-ui, sans-serif;
+  font-family: "Fredoka Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
   color: var(--ink);
 }
 
@@ -19,7 +22,7 @@ html, body {
   height: 100%;
   overflow: hidden;
   overscroll-behavior: none;
-  background: radial-gradient(circle at 50% 38%, #fffdf7 0%, var(--paper) 45%, var(--paper-warm) 100%) fixed;
+  background: radial-gradient(ellipse 90% 60% at 50% 70%, var(--sky-glow) 0%, var(--sky) 55%, var(--sky-high) 100%) fixed;
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
@@ -52,7 +55,7 @@ html, body {
   font-size: 0.85rem;
   pointer-events: none;
 }
-.brand { font-weight: 800; letter-spacing: 0.02em; }
+.brand { font-family: var(--display); font-size: 1.15rem; letter-spacing: 0.01em; }
 .best { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 
 /* Hold hint: a small floating cue, no panel. The whole #play area takes the press, and
@@ -68,14 +71,14 @@ html, body {
   pointer-events: none;
   transition: opacity 0.3s ease, translate 0.35s ease;
 }
-.pad.holding, .pad.away { opacity: 0; translate: 0 12px; }
+.pad.away { opacity: 0; translate: 0 12px; }
 
 .ring {
   width: 52px;
   height: 52px;
   display: grid;
   place-items: center;
-  border: 2px dotted var(--pad-line);
+  border: 2px dotted var(--hint-line);
   border-radius: 50%;
   animation: breathe 2.4s ease-in-out infinite;
 }
@@ -83,8 +86,8 @@ html, body {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: #7f988c;
-  box-shadow: 0 0 0 4px rgb(127 152 140 / 0.25);
+  background: var(--primary);
+  box-shadow: 0 0 0 4px rgb(107 76 230 / 0.2);
 }
 
 @keyframes breathe { 50% { scale: 0.88; } }
@@ -105,7 +108,7 @@ html, body {
   text-align: center;
   background: var(--card);
   border-radius: 24px;
-  box-shadow: 0 12px 32px rgb(109 106 68 / 0.12);
+  box-shadow: 0 14px 36px rgb(42 33 84 / 0.16);
   animation: rise 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
 }
 .result[hidden] { display: none; }
@@ -119,9 +122,11 @@ html, body {
 }
 
 .result-number {
-  font-size: 3.6rem;
-  font-weight: 800;
+  font-family: var(--display);
+  font-size: 4rem;
+  font-weight: 400;
   line-height: 1.05;
+  color: var(--primary);
   font-variant-numeric: tabular-nums;
 }
 .result-unit { font-size: 1.15rem; font-weight: 700; margin-left: 0.2em; }
@@ -144,7 +149,7 @@ html, body {
   font: inherit;
   font-size: 1rem;
   font-weight: 700;
-  color: #fffaf1;
+  color: #fff;
   background: var(--primary);
   border: 0;
   border-radius: 14px;

@@ -1,12 +1,11 @@
-// The latex balloon: a fixed neck at the lips and a body that stretches as it fills.
-// The body is a lathe around +Y (neck end at 0, crown at 1) scaled to the live diameter.
+// The latex balloon: one lathe around +Y, its tapered end at the lips (0) and its crown
+// at 1, scaled to the live diameter.
 
 import * as THREE from 'three';
 import { createLatex } from './latex.js';
 import { createShards } from './shards.js';
 import { bodyRadius } from './shape.js';
 
-const NECK_LEN = 0.035;      // metres from lips to where the body starts
 const TILT = 0.08;           // radians the balloon points up from straight ahead
 
 function profile(segments = 56) {
@@ -16,14 +15,6 @@ function profile(segments = 56) {
     pts.push(new THREE.Vector2(Math.max(bodyRadius(u), 1e-4), u));
   }
   return pts;
-}
-
-function neckProfile() {
-  // Rolled lip at the mouth, then a short tube that flares into the body.
-  return [
-    [0.0115, 0.0], [0.0125, 0.003], [0.0105, 0.006], [0.0085, 0.01],
-    [0.0082, 0.022], [0.0095, 0.03], [0.013, 0.037],
-  ].map(([r, y]) => new THREE.Vector2(r, y));
 }
 
 const smooth = (a, b, x) => {
@@ -39,13 +30,9 @@ export function createBalloon(scene, mouth) {
   root.rotation.x = -Math.PI / 2 + TILT;
   scene.add(root);
 
-  const neck = new THREE.Mesh(new THREE.LatheGeometry(neckProfile(), 32), latex.neck);
-  root.add(neck);
-
   const bodyGeo = new THREE.LatheGeometry(profile(), 72);
   latex.shadeThickness(bodyGeo);
   const body = new THREE.Mesh(bodyGeo, latex.body);
-  body.position.y = NECK_LEN - 0.004;
   root.add(body);
 
   const shards = createShards(scene, latex.body);

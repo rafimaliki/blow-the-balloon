@@ -1,5 +1,5 @@
 // Soft, matte toy-rubber look. The rubber lightens and gets a little glossier as it
-// stretches, and stays darker where it is thick near the neck; both are cues, not meters.
+// stretches, and stays darker where it is thick near the lips; both are cues, not meters.
 
 import * as THREE from 'three';
 
@@ -16,18 +16,10 @@ export function createLatex() {
     side: THREE.DoubleSide,
   });
 
-  const neck = new THREE.MeshPhysicalMaterial({
-    color: '#b8392d',
-    roughness: 0.6,
-    clearcoat: 0.2,
-    clearcoatRoughness: 0.5,
-  });
-
   return {
     body,
-    neck,
 
-    // Darkens vertices near the neck (low y on the unit lathe) where the rubber stays thick.
+    // Darkens vertices near the lips (low y on the unit lathe) where the rubber stays thick.
     shadeThickness(geometry) {
       const pos = geometry.attributes.position;
       const colors = new Float32Array(pos.count * 3);

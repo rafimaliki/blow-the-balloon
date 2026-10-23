@@ -65,7 +65,7 @@ function frame(now) {
   const volumeBefore = round.volumeL;
   step(round, dtS, armed && hold.isHolding());
 
-  overlay.setHolding(round.state === 'blowing');
+  overlay.setHint(round.state === 'ready');
   sfx.breathe(round.state === 'blowing' && dtS > 0 ? (round.volumeL - volumeBefore) / dtS / TUNING.airflowLps : 0);
   balloon.setDiameter(diameterCm(round.volumeL));
   if (wasBlowing && isOver(round)) endRound();

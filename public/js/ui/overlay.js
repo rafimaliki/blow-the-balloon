@@ -17,9 +17,9 @@ export function createOverlay(doc, { onAgain }) {
 
     setBest(l) { best.textContent = l ? `Best ${litres(l)} L` : ''; },
 
-    // The hint hides while blowing; it never says how much air is in.
-    setHolding(holding) {
-      pad.classList.toggle('holding', holding);
+    // The hint shows only before the first breath; it never says how much air is in.
+    setHint(visible) {
+      pad.classList.toggle('away', !visible);
     },
 
     showResult({ score, bestScore, isNewBest, popped }) {
@@ -27,13 +27,11 @@ export function createOverlay(doc, { onAgain }) {
       $('result-number').textContent = litres(score);
       $('result-badge').hidden = !isNewBest;
       $('result-best').textContent = !isNewBest && bestScore ? `Personal best ${litres(bestScore)} L` : '';
-      pad.classList.add('away');
       result.hidden = false;
     },
 
     hideResult() {
       result.hidden = true;
-      pad.classList.remove('away');
     },
   };
 }
