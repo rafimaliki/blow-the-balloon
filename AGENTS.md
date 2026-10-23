@@ -7,7 +7,7 @@ Static site, no build step, Three.js from a pinned CDN import map. Must play on 
 
 ```
 python -m http.server 8000 -d public     # then open http://localhost:8000
-node test/run.js                         # pure-logic self-checks
+node --test                              # pure-logic checks (Node's built-in runner)
 ```
 
 ## Hard constraints
@@ -37,10 +37,11 @@ public/                 deployed as-is; nothing outside it ships
     balloon/            balloon mesh, material, inflation deformation, pop effect
     game/               round state machine, burst rule, scoring (pure, no DOM, no Three.js)
     input/              hold-to-blow from pointer + keyboard
+    audio/              synthesised breath and pop (Web Audio, no sound files)
     ui/                 result overlay, high score display
     storage/            localStorage read/write for scores
-  assets/               models, textures, sounds (compressed; keep each file small)
-test/                   mirrors public/js; run.js runs every *.test.js
+  assets/               the backdrop panorama (Poly Haven "Meadow 2", CC0, 1k HDR); keep files small
+test/                   mirrors public/js; `node --test` finds every *.test.js
 docs/                   design notes (see Docs)
 ```
 
@@ -53,8 +54,13 @@ Node.
   verifiable check.
 - **ponytail (full)** — laziest thing that works. Mark shortcuts `// ponytail: <ceiling>, <upgrade path>`.
 - **caveman (ultra)** — chat prose only. Code, comments, commits, and docs stay normal clear English.
-- No design-system skill. The UI is a canvas plus one result overlay; keep the overlay quiet so the
-  balloon stays the subject. Use `/impeccable` if the overlay grows beyond that.
+- No design-system skill. The look is the game's own: a real red latex balloon in front of a real
+  outdoor panorama blurred like a shallow-focus photo (the scene stays calm, no clutter), under a soft
+  toy-like UI: deep navy ink (never purple), a navy press-down button, sunny yellow for a new best,
+  Bagel Fat One for display text and Fredoka for the rest, both from the pinned jsdelivr CDN. Colours
+  are tokens at the top of `css/style.css`; reuse them rather than adding new ones. Nothing covers the
+  balloon while blowing: no panel, no live counter. Use `/impeccable` if the UI grows beyond the hint
+  and the result card.
 - One responsibility per file. 300-line soft ceiling, 500 hard (tests and assets excluded) — past it,
   split along a seam, not at a line count. Watch `main.js` and the scene setup: they are the obvious
   home for every new thing.
@@ -89,7 +95,7 @@ conventions here win over their defaults.
 ## Definition of done
 
 - The change landed on a branch and merged by pull request; the default branch was never written to directly.
-- `node test/run.js` passes.
+- `node --test` passes.
 - Served by `python -m http.server 8000 -d public`, the game loads with a clean console and a full round
   works: hold → balloon grows → release → score shown; and hold too long → pop → score 0.
 - Checked in a phone-sized viewport with touch emulation: hold-to-blow works, the page does not scroll,

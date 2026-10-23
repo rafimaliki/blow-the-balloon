@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#cfe7f8">
+  <title>Blow the Balloon</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%8E%88%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/bagel-fat-one@5.3.0/latin-400.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fredoka@5.3.0/wght.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <!-- Everything inside #play is the hold surface: press anywhere on it to blow. -->
+  <main id="play">
+    <canvas id="stage" aria-label="Balloon. Press and hold to blow, release to stop."></canvas>
+
+    <header class="top">
+      <span class="brand">Blow the Balloon</span>
+      <span id="best" class="best"></span>
+    </header>
+
+    <div id="pad" class="pad" aria-hidden="true">
+      <span class="ring"><span class="dot"></span></span>
+      <p class="pad-label">Hold to blow</p>
+    </div>
+  </main>
+
+  <section id="result" class="result" hidden aria-live="polite">
+    <h2 id="result-title" class="result-title"></h2>
+    <p class="result-score"><span id="result-number" class="result-number"></span><span class="result-unit">L</span></p>
+    <p id="result-badge" class="result-badge" hidden>★ New personal best!</p>
+    <p id="result-best" class="result-best"></p>
+    <button id="again" class="primary" type="button">Blow again <span aria-hidden="true">↻</span></button>
+  </section>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
