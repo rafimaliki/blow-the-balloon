@@ -3,7 +3,7 @@
 
 // Tuned by feel. Volume is what the player adds; diameter is what they see and score.
 export const TUNING = {
-  startVolumeL: 0.12,     // limp balloon at the mouth
+  startVolumeL: 0,        // empty: every bit of size is the player's breath
   airflowLps: 5.5,        // litres per second while holding
   puffHz: 2.2,            // airflow wobbles at this rate so a breath feels organic
   puffDepth: 0.35,        // 0 = steady stream, 1 = full stop between puffs

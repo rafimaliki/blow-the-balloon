@@ -1,73 +1,37 @@
-// Renderer, first-person camera at the player's eyes, and a soft room for reflections.
-// World units are metres; the origin is between the eyes.
+// Renderer, first-person camera at the player's eyes, and soft studio light.
+// World units are metres; the origin is between the eyes. The page background shows
+// through the transparent canvas, so the scene has no backdrop of its own.
 
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 // Where the balloon's neck meets the lips, relative to the eyes.
-export const MOUTH = new THREE.Vector3(0, -0.075, -0.05);
-
-// The room behind the balloon, painted already out of focus: the eyes are on the balloon.
-// ponytail: a painted backdrop, not geometry; build a real room if the camera ever moves.
-function roomBackdrop() {
-  const c = document.createElement('canvas');
-  c.width = 256;
-  c.height = 256;
-  const g = c.getContext('2d');
-  const wall = g.createLinearGradient(0, 0, 0, 170);
-  wall.addColorStop(0, '#cbb9a6');
-  wall.addColorStop(1, '#a8927d');
-  g.fillStyle = wall;
-  g.fillRect(0, 0, 256, 256);
-  const floor = g.createLinearGradient(0, 160, 0, 256);
-  floor.addColorStop(0, '#7a5a42');
-  floor.addColorStop(1, '#4e3727');
-  g.fillStyle = floor;
-  g.fillRect(0, 165, 256, 91);
-  // Daylight from a window to the left.
-  const sun = g.createRadialGradient(40, 70, 4, 40, 70, 110);
-  sun.addColorStop(0, 'rgb(255 246 228 / 0.95)');
-  sun.addColorStop(1, 'rgb(255 246 228 / 0)');
-  g.fillStyle = sun;
-  g.fillRect(0, 0, 256, 256);
-  // Soften it by redrawing through a blur filter (slightly oversized to hide the blurred edges).
-  const blurred = document.createElement('canvas');
-  blurred.width = blurred.height = 256;
-  const b = blurred.getContext('2d');
-  b.filter = 'blur(22px)';
-  b.drawImage(c, -40, -40, 336, 336);
-  const tex = new THREE.CanvasTexture(blurred);
-  tex.colorSpace = THREE.SRGBColorSpace;
-  return tex;
-}
+export const MOUTH = new THREE.Vector3(0, -0.095, -0.05);
 
 export function createStage(canvas) {
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.05;
+  renderer.setClearColor(0x000000, 0);
+  // Neutral keeps the toy-like colours as picked instead of filmic-desaturating them.
+  renderer.toneMapping = THREE.NeutralToneMapping;
 
   const scene = new THREE.Scene();
-  const env = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
-  scene.environment = env;
-  scene.environmentIntensity = 0.9;
-  scene.background = roomBackdrop();
+  // A faint room reflection keeps a soft sheen without looking photographic.
+  scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+  scene.environmentIntensity = 0.35;
 
-  // A warm key light from above-front gives the latex its highlight; the room fills the rest.
-  const key = new THREE.DirectionalLight(0xfff1e0, 2.2);
-  key.position.set(0.6, 1.2, 0.4);
+  scene.add(new THREE.HemisphereLight(0xfffaf0, 0xc9d3bd, 1.4));
+  const key = new THREE.DirectionalLight(0xfff4e4, 1.8);
+  key.position.set(-0.6, 1.0, 0.5);
   scene.add(key);
-  const rim = new THREE.DirectionalLight(0xbfd8ff, 0.8);
-  rim.position.set(-0.8, 0.3, -1);
-  scene.add(rim);
 
   const camera = new THREE.PerspectiveCamera(60, 1, 0.01, 50);
-  camera.rotation.x = -0.14; // looking slightly down, along the balloon
+  camera.rotation.x = -0.2; // looking slightly down, along the balloon
   const rest = camera.position.clone();
 
   const resize = () => {
-    const w = innerWidth;
-    const h = innerHeight;
+    const w = canvas.clientWidth;
+    const h = canvas.clientHeight;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     // Portrait phones are narrow: widen the vertical field so the balloon still fits across.

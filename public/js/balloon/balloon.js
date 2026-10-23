@@ -55,11 +55,22 @@ export function createBalloon(scene, mouth) {
   let velocity = 0;
   let targetCm = 0;
 
+  // An empty balloon is a limp strip of rubber; it keeps that length until the air
+  // fills it out, then rounds out as it grows.
+  const EMPTY_WIDTH_CM = 3.6;
+  const EMPTY_FLAT = 0.3;  // an empty balloon is a flat strip: depth as a share of width
+  const EMPTY_LENGTH_CM = 10;
+  const DROOP = 0.2; // radians an empty balloon sags below its filled direction
+  let droop = 1;
+
   function applySize(cm) {
-    const width = cm / 100;
-    // A barely-filled balloon is long and thin; it rounds out as it fills.
+    cm = Math.max(0, cm);
+    const width = Math.max(cm, EMPTY_WIDTH_CM) / 100;
     const aspect = 1.9 - 0.65 * smooth(8, 30, cm);
-    body.scale.set(width, width * aspect, width);
+    const length = Math.max(cm * aspect, EMPTY_LENGTH_CM) / 100;
+    const depth = width * (EMPTY_FLAT + (1 - EMPTY_FLAT) * smooth(0, 9, cm));
+    body.scale.set(width, length, depth);
+    droop = 1 - smooth(0, 10, cm);
     latex.setStretch(smooth(14, 46, cm));
   }
 
@@ -88,7 +99,7 @@ export function createBalloon(scene, mouth) {
 
       // Small drift, like a balloon held in the lips.
       root.rotation.z = Math.sin(tS * 0.9) * 0.025;
-      root.rotation.x = -Math.PI / 2 + TILT + Math.sin(tS * 0.6) * 0.015;
+      root.rotation.x = -Math.PI / 2 + TILT - DROOP * droop + Math.sin(tS * 0.6) * 0.015;
 
       shards.update(dtS);
     },

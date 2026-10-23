@@ -1,30 +1,40 @@
-// The hint before blowing and the result screen after. Markup lives in index.html.
+// The hold pad, the best-score label, and the result card. Markup lives in index.html.
+// Nothing here may show how much air is in the balloon: see docs/game-design.md.
 
 export function createOverlay(doc, { onAgain }) {
-  const hint = doc.getElementById('hint');
-  const result = doc.getElementById('result');
-  const title = doc.getElementById('result-title');
-  const scoreEl = doc.getElementById('result-score');
-  const best = doc.getElementById('result-best');
-  const again = doc.getElementById('again');
+  const $ = (id) => doc.getElementById(id);
+  const pad = $('pad');
+  const padLabel = $('pad-label');
+  const best = $('best');
+  const result = $('result');
+  const again = $('again');
 
   again.addEventListener('click', onAgain);
 
   return {
     isResultShown: () => !result.hidden,
 
-    showHint() { hint.classList.remove('gone'); },
-    hideHint() { hint.classList.add('gone'); },
+    setBest(cm) { best.textContent = cm ? `Best ${cm} cm` : ''; },
 
-    showResult({ score, bestScore, isNewBest, popped }) {
-      title.textContent = popped ? 'Pop!' : isNewBest ? 'New best' : 'Your balloon';
-      scoreEl.innerHTML = `${score}<small>cm</small>`;
-      best.textContent = isNewBest ? 'Biggest one yet' : bestScore ? `Best ${bestScore} cm` : '';
-      best.classList.toggle('new', isNewBest);
-      result.hidden = false;
-      again.focus({ preventScroll: true });
+    // Pressed state only: says "you are blowing", never how much.
+    setHolding(holding) {
+      if (pad.classList.contains('holding') === holding) return; // called every frame
+      pad.classList.toggle('holding', holding);
+      padLabel.textContent = holding ? 'Let go to stop' : 'Hold to blow';
     },
 
-    hideResult() { result.hidden = true; },
+    showResult({ score, bestScore, isNewBest, popped }) {
+      $('result-title').textContent = popped ? 'Popped!' : 'Nice balloon';
+      $('result-number').textContent = score;
+      $('result-badge').hidden = !isNewBest;
+      $('result-best').textContent = !isNewBest && bestScore ? `Personal best ${bestScore} cm` : '';
+      pad.classList.add('away');
+      result.hidden = false;
+    },
+
+    hideResult() {
+      result.hidden = true;
+      pad.classList.remove('away');
+    },
   };
 }

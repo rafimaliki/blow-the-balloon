@@ -11,8 +11,7 @@ import { loadBest, recordScore } from './storage/scores.js';
 const RESULT_DELAY_MS = { released: 500, popped: 900 }; // let the moment land first
 
 const storage = (() => { try { return localStorage; } catch { return undefined; } })();
-const canvas = document.getElementById('stage');
-const stage = createStage(canvas);
+const stage = createStage(document.getElementById('stage'));
 const balloon = createBalloon(stage.scene, MOUTH);
 const sfx = createSfx();
 const overlay = createOverlay(document, { onAgain: newRound });
@@ -22,7 +21,7 @@ let round;
 // previous round (e.g. Space used to restart) does not blow by accident.
 let armed;
 
-const hold = createHold(canvas, {
+const hold = createHold(document.getElementById('play'), {
   onPress() {
     sfx.unlock();
     if (overlay.isResultShown()) newRound();
@@ -38,7 +37,6 @@ function newRound() {
   armed = false;
   balloon.reset(diameterCm(round.volumeL));
   overlay.hideResult();
-  overlay.showHint();
 }
 
 function endRound() {
@@ -52,6 +50,7 @@ function endRound() {
   const s = score(round);
   const isNewBest = recordScore(storage, s);
   setTimeout(() => {
+    overlay.setBest(loadBest(storage));
     overlay.showResult({ score: s, bestScore: loadBest(storage), isNewBest, popped });
   }, RESULT_DELAY_MS[round.state]);
 }
@@ -66,7 +65,7 @@ function frame(now) {
   const volumeBefore = round.volumeL;
   step(round, dtS, armed && hold.isHolding());
 
-  if (round.state === 'blowing') overlay.hideHint();
+  overlay.setHolding(round.state === 'blowing');
   sfx.breathe(round.state === 'blowing' && dtS > 0 ? (round.volumeL - volumeBefore) / dtS / TUNING.airflowLps : 0);
   balloon.setDiameter(diameterCm(round.volumeL));
   if (wasBlowing && isOver(round)) endRound();
@@ -77,5 +76,6 @@ function frame(now) {
   requestAnimationFrame(frame);
 }
 
+overlay.setBest(loadBest(storage));
 newRound();
 requestAnimationFrame(frame);

@@ -10,8 +10,9 @@ balloon you dare: stop too early and the score is small, go too far and it pops.
 
 ## One round
 
-1. **Ready** — the balloon is limp at the mouth. A short hint says to hold (press and hold the screen, the
-   mouse button, or Space). The hint disappears once blowing starts.
+1. **Ready** — the balloon is empty: a flat, limp strip of rubber at the lips, holding no air at all. A
+   hold pad at the bottom says to hold (press and hold anywhere, the mouse button, or Space). While
+   blowing, the pad only shows that you are pressing, never how much air is in.
 2. **Blowing** — while held, the balloon inflates. Nothing on screen measures it: no meter, no number, no
    timer. The balloon's look is the only feedback, so its growth, stretch and sheen must read clearly.
 3. **Release** — letting go ends the round. There is one breath per round; holding again does not resume.
