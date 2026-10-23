@@ -54,10 +54,12 @@ Node.
   verifiable check.
 - **ponytail (full)** — laziest thing that works. Mark shortcuts `// ponytail: <ceiling>, <upgrade path>`.
 - **caveman (ultra)** — chat prose only. Code, comments, commits, and docs stay normal clear English.
-- No design-system skill. The visual reference is https://softserve.nog.cc/: cream paper, deep green
-  ink, soft matte toy-like 3D (not photoreal), a result card with chunky pressable buttons. Unlike the
-  reference, nothing covers the balloon while blowing: no pad panel, no live counter. Colours are tokens at the top of `css/style.css`; reuse them rather than adding new
-  ones. Use `/impeccable` if the UI grows beyond the hint and the result card.
+- No design-system skill. The look is the game's own: balloons against an open sky (soft blue
+  gradient, deep plum ink, a violet press-down button, sunny yellow for a new best), soft matte toy-like
+  3D (not photoreal), Bagel Fat One for display text and Fredoka for the rest, both from the pinned
+  jsdelivr CDN. Colours are tokens at the top of `css/style.css`; reuse them rather than adding new ones.
+  Nothing covers the balloon while blowing: no panel, no live counter. Use `/impeccable` if the UI grows
+  beyond the hint and the result card.
 - One responsibility per file. 300-line soft ceiling, 500 hard (tests and assets excluded) — past it,
   split along a seam, not at a line count. Watch `main.js` and the scene setup: they are the obvious
   home for every new thing.
