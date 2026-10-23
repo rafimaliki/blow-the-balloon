@@ -29,12 +29,24 @@ If the balloon reaches its burst point while held, it pops, the round ends at on
   result screen. Storage being unavailable (private mode, blocked) must not break the game; it just means
   no high score is remembered.
 
+## Decided
+
+Numbers live in `TUNING` in `public/js/game/round.js`.
+
+- **Score is the diameter in centimetres**, rounded — a size anyone can picture.
+- **Air goes in at a steady rate, in gentle puffs; size follows volume.** Diameter grows with the cube
+  root of volume, so the balloon visibly slows as it gets big, without any special rule.
+- **Burst diameter is uniform between 26 and 46 cm.** A middling burst takes about five seconds of
+  blowing; the largest about eleven.
+- **The rubber lightens and gets glossier as it stretches.** This follows the balloon's size, not its
+  distance from the burst point, so it reads like real latex without giving the answer away.
+- **Sound is synthesised**: a breathy hiss that follows the puffs, and a pop. The phone vibrates on pop
+  where supported.
+
 ## Open decisions
 
-These are not settled; whoever builds the relevant part decides and records it here.
+Whoever builds the relevant part decides and records it above.
 
-- The score unit (centimetres of diameter, litres, or plain points).
-- The burst range and whether inflation slows as the balloon nears its limit.
-- Warning cues near the limit (creaking sound, surface strain) — allowed, because they are part of the
-  balloon, not an indicator. A numeric or bar warning is not.
-- Sound for blowing and popping, and haptics (`navigator.vibrate`) on pop.
+- Further warning cues near the limit (creaking, visible strain lines) — allowed, because they are part
+  of the balloon, not an indicator. A numeric or bar warning is not.
+- Hands holding the neck in view.
