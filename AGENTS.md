@@ -56,7 +56,7 @@ Node.
 - **caveman (ultra)** — chat prose only. Code, comments, commits, and docs stay normal clear English.
 - No design-system skill. The look is the game's own: balloons against an open sky (soft blue
   gradient, deep navy ink (never purple), a navy press-down button, sunny yellow for a new best), soft matte toy-like
-  3D (not photoreal), Bagel Fat One for display text and Fredoka for the rest, both from the pinned
+  3D in a sunny meadow (not photoreal), Bagel Fat One for display text and Fredoka for the rest, both from the pinned
   jsdelivr CDN. Colours are tokens at the top of `css/style.css`; reuse them rather than adding new ones.
   Nothing covers the balloon while blowing: no panel, no live counter. Use `/impeccable` if the UI grows
   beyond the hint and the result card.

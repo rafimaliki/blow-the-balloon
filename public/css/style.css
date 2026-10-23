@@ -3,7 +3,7 @@
 :root {
   --sky-high: #9fcdf0;
   --sky: #cfe7f8;
-  --sky-glow: #f6fbff;
+  --sky-glow: #dcedf9;
   --card: rgb(255 255 255 / 0.92);
   --ink: #1d2b45;
   --ink-soft: #566479;
@@ -22,7 +22,8 @@ html, body {
   height: 100%;
   overflow: hidden;
   overscroll-behavior: none;
-  background: radial-gradient(ellipse 90% 60% at 50% 70%, var(--sky-glow) 0%, var(--sky) 55%, var(--sky-high) 100%) fixed;
+  /* Only the sky shows through: the 3D world draws the ground. The light end matches the fog. */
+  background: linear-gradient(to bottom, var(--sky-high) 0%, var(--sky) 35%, var(--sky-glow) 60%) fixed;
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;

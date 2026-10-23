@@ -1,6 +1,7 @@
 // Entry: wires the modules together and runs the frame loop. Game rules live in game/.
 
 import { createStage, MOUTH } from './scene/stage.js';
+import { createWorld } from './scene/world.js';
 import { createBalloon } from './balloon/balloon.js';
 import { createHold } from './input/hold.js';
 import { createOverlay } from './ui/overlay.js';
@@ -12,6 +13,7 @@ const RESULT_DELAY_MS = { released: 500, popped: 900 }; // let the moment land f
 
 const storage = (() => { try { return localStorage; } catch { return undefined; } })();
 const stage = createStage(document.getElementById('stage'));
+const world = createWorld(stage.scene);
 const balloon = createBalloon(stage.scene, MOUTH);
 const sfx = createSfx();
 const overlay = createOverlay(document, { onAgain: newRound });
@@ -71,6 +73,7 @@ function frame(now) {
   if (wasBlowing && isOver(round)) endRound();
 
   balloon.update(dtS, tS);
+  world.update(dtS);
   stage.update(dtS, tS);
   stage.render();
   requestAnimationFrame(frame);
