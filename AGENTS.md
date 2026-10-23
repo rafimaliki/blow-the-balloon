@@ -13,7 +13,8 @@ node --test                              # pure-logic checks (Node's built-in ru
 ## Hard constraints
 
 - **No build step, no npm runtime dependencies** — `public/` is deployed to GitHub Pages as-is, so what is
-  in the repo is exactly what ships. A bundler would add a second source of truth.
+  in the repo is exactly what ships. A bundler would add a second source of truth. Every push to `main`
+  runs `.github/workflows/pages.yml`: `node --test`, then publish `public/`. A red check means no deploy.
 - **Three.js is loaded through the import map in `index.html`, pinned to an exact version** — a floating
   `latest` URL can break the game with no commit in this repo.
 - **ES modules need HTTP** — the game does not run from `file://`; always test through a local server.
