@@ -4,8 +4,10 @@ Scope: what the game is and the rules it must keep. Read before changing input, 
 
 ## Premise
 
-You are the person blowing the balloon. The camera is at their eyes, looking down the line of the
-balloon held at their mouth, so the balloon grows toward and across the view. The goal is the biggest
+You are the person blowing the balloon. The camera looks from behind and above the player along the
+balloon, which points away from you: the neck and its rolled lip are nearest, the body grows away into
+the view. The camera sits just far enough back that the largest balloon the game allows still fits the
+screen, so the balloon fills the frame as it grows instead of spilling out of it. The goal is the biggest
 balloon you dare: stop too early and the score is small, go too far and it pops.
 
 ## One round

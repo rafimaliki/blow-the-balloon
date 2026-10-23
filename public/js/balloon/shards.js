@@ -1,7 +1,6 @@
 // Torn rubber flying off when the balloon pops.
 
 import * as THREE from 'three';
-import { bodyRadius } from './shape.js';
 
 const COUNT = 48;
 const LIFE_S = 1.1;
@@ -26,19 +25,18 @@ export function createShards(scene, material) {
       pieces.length = 0;
     },
 
-    // Scatters pieces from the surface of `body` (a unit lathe mesh) outward.
+    // Scatters pieces outward from random points on the surface of the `body` mesh.
     burst(body, widthM) {
       this.clear();
       body.updateWorldMatrix(true, false);
-      const centre = new THREE.Vector3(0, 0.55, 0).applyMatrix4(body.matrixWorld);
+      const pos = body.geometry.attributes.position;
+      body.geometry.computeBoundingSphere();
+      const centre = body.geometry.boundingSphere.center.clone().applyMatrix4(body.matrixWorld);
       mat.opacity = 1;
       mat.color.copy(material.color);
 
       for (let i = 0; i < COUNT; i++) {
-        const u = 0.15 + Math.random() * 0.8;
-        const a = Math.random() * Math.PI * 2;
-        const r = bodyRadius(u);
-        tmp.set(Math.cos(a) * r, u, Math.sin(a) * r).applyMatrix4(body.matrixWorld);
+        tmp.fromBufferAttribute(pos, Math.floor(Math.random() * pos.count)).applyMatrix4(body.matrixWorld);
 
         const mesh = new THREE.Mesh(geo, mat);
         mesh.position.copy(tmp);

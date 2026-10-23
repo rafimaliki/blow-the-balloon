@@ -40,7 +40,7 @@ public/                 deployed as-is; nothing outside it ships
     audio/              synthesised breath and pop (Web Audio, no sound files)
     ui/                 result overlay, high score display
     storage/            localStorage read/write for scores
-  assets/               models, textures, sounds (compressed; keep each file small)
+  assets/               the backdrop panorama (Poly Haven "Meadow 2", CC0, 1k HDR); keep files small
 test/                   mirrors public/js; `node --test` finds every *.test.js
 docs/                   design notes (see Docs)
 ```
@@ -54,12 +54,13 @@ Node.
   verifiable check.
 - **ponytail (full)** — laziest thing that works. Mark shortcuts `// ponytail: <ceiling>, <upgrade path>`.
 - **caveman (ultra)** — chat prose only. Code, comments, commits, and docs stay normal clear English.
-- No design-system skill. The look is the game's own: balloons against an open sky (soft blue
-  gradient, deep navy ink (never purple), a navy press-down button, sunny yellow for a new best), soft matte toy-like
-  3D in a sunny meadow (not photoreal), Bagel Fat One for display text and Fredoka for the rest, both from the pinned
-  jsdelivr CDN. Colours are tokens at the top of `css/style.css`; reuse them rather than adding new ones.
-  Nothing covers the balloon while blowing: no panel, no live counter. Use `/impeccable` if the UI grows
-  beyond the hint and the result card.
+- No design-system skill. The look is the game's own: a real red latex balloon in front of a real
+  outdoor panorama blurred like a shallow-focus photo (the scene stays calm, no clutter), under a soft
+  toy-like UI: deep navy ink (never purple), a navy press-down button, sunny yellow for a new best,
+  Bagel Fat One for display text and Fredoka for the rest, both from the pinned jsdelivr CDN. Colours
+  are tokens at the top of `css/style.css`; reuse them rather than adding new ones. Nothing covers the
+  balloon while blowing: no panel, no live counter. Use `/impeccable` if the UI grows beyond the hint
+  and the result card.
 - One responsibility per file. 300-line soft ceiling, 500 hard (tests and assets excluded) — past it,
   split along a seam, not at a line count. Watch `main.js` and the scene setup: they are the obvious
   home for every new thing.

@@ -57,7 +57,7 @@ html, body {
   pointer-events: none;
 }
 .brand { font-family: var(--display); font-size: 1.15rem; letter-spacing: 0.01em; }
-.best { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.best { font-weight: 600; font-variant-numeric: tabular-nums; }
 
 /* Hold hint: a small floating cue, no panel. The whole #play area takes the press, and
    the hint gets out of the way while blowing so the whole balloon is in view. */
@@ -66,9 +66,17 @@ html, body {
   left: 0;
   right: 0;
   top: 30%;
+  width: max-content;
+  margin: 0 auto;
+  padding: 14px 22px 12px;
   display: grid;
   justify-items: center;
   gap: 8px;
+  background: rgb(255 255 255 / 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgb(29 43 69 / 0.12);
   pointer-events: none;
   transition: opacity 0.3s ease, translate 0.35s ease;
 }
@@ -160,6 +168,21 @@ html, body {
 }
 .primary:active { translate: 0 3px; box-shadow: 0 1px 0 var(--primary-edge); }
 .primary:focus-visible { outline: 3px solid var(--badge); outline-offset: 3px; }
+
+/* Wide screens have room beside the balloon: keep the whole balloon in view. */
+@media (min-width: 900px) and (min-aspect-ratio: 4/3) {
+  .result {
+    left: auto;
+    right: 48px;
+    bottom: 50%;
+    translate: 0 50%;
+    animation-name: rise-side;
+  }
+}
+
+@keyframes rise-side {
+  from { opacity: 0; translate: 30px 50%; }
+}
 
 @keyframes rise {
   from { opacity: 0; translate: -50% 30px; }
